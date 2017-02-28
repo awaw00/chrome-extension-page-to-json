@@ -7,8 +7,15 @@ const functions = (function () {
     };
   }
 
+  function getJson (callback) {
+    return function (rule) {
+      callback(rule);
+    }
+  }
+
   return {
-    getLocation
+    getLocation,
+    getJson
   };
 })();
 

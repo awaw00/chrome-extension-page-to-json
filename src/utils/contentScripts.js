@@ -18,5 +18,4 @@
       return callContentFunction.bind(null, key);
     }
   });
-
 })();
