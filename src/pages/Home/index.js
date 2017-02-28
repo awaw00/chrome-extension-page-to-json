@@ -70,11 +70,7 @@ class HomePage extends React.PureComponent {
     let property = rule.getIn(['properties', propIndex]);
 
     if (typeof subPropIndex === 'number') {
-      let subProperties = property.get('subProperties');
-      let subProperty = subProperties.get(subPropIndex);
-      subProperty = subProperty.set(propKey, propValue);
-      subProperties = subProperties.set(subPropIndex, subProperty);
-      property = property.set('subProperties', subProperties);
+      property = property.setIn(['subProperties', subPropIndex, propKey], propValue);
     } else {
       property = property.set(propKey, propValue);
     }
@@ -91,15 +87,13 @@ class HomePage extends React.PureComponent {
   }
 
   addProperty (ruleIndex) {
-    const {rules} = this.state;
-    let rule = rules.get(ruleIndex);
-    let properties = rule.get('properties');
+    let {rules} = this.state;
+    const path = [ruleIndex, 'properties'];
+    let properties = rules.getIn(path);
     properties = properties.push(fromJS(initialProperty));
-    rule = rule.set('properties', properties);
+    rules = rules.setIn(path, properties);
 
-    this.setState({
-      rules: rules.set(ruleIndex, rule)
-    });
+    this.setState({rules});
   }
 
   async getJson (ruleIndex) {
@@ -118,34 +112,24 @@ class HomePage extends React.PureComponent {
 
   addSubProperty (ruleIndex, propIndex) {
     let {rules} = this.state;
-    let rule = rules.get(ruleIndex);
-    let properties = rule.get('properties');
-    let property = properties.get(propIndex);
-    let subProperties = property.get('subProperties');
+    const path = [ruleIndex, 'properties', propIndex, 'subProperties'];
+    let subProperties = rules.getIn(path);
     subProperties = subProperties.push(fromJS(initialProperty));
-    property = property.set('subProperties', subProperties);
-    properties = properties.set(propIndex, property);
-    rule = rule.set('properties', properties);
-    rules = rules.set(ruleIndex, rule);
+    rules = rules.setIn(path, subProperties);
     this.setState({rules});
   }
 
   removeSubProperty (ruleIndex, propIndex) {
     let {rules} = this.state;
-    let rule = rules.get(ruleIndex);
-    let properties = rule.get('properties');
-    let property = properties.get(propIndex);
-    let subProperties = property.get('subProperties');
+    const path = [ruleIndex, 'properties', propIndex, 'subProperties'];
+    let subProperties = rules.getIn(path);
 
     if (subProperties.size <= 1) {
       return;
     }
 
     subProperties = subProperties.splice(subProperties.size - 1, 1);
-    property = property.set('subProperties', subProperties);
-    properties = properties.set(propIndex, property);
-    rule = rule.set('properties', properties);
-    rules = rules.set(ruleIndex, rule);
+    rules = rules.setIn(path, subProperties);
     this.setState({rules});
   }
 
