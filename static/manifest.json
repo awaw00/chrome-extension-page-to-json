@@ -1,0 +1,22 @@
+{
+  "name": "Page to JSON",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "assets/icon1.png",
+    "default_title": "test",
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["lib/jquery.min.js", "content.js"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "http://*/*",
+    "https://*/*"
+  ]
+}
