@@ -116,7 +116,7 @@ class HomePage extends React.PureComponent {
     });
   }
 
-  addSubRule (ruleIndex, propIndex) {
+  addSubProperty (ruleIndex, propIndex) {
     let {rules} = this.state;
     let rule = rules.get(ruleIndex);
     let properties = rule.get('properties');
@@ -130,7 +130,7 @@ class HomePage extends React.PureComponent {
     this.setState({rules});
   }
 
-  removeSubRule (ruleIndex, propIndex) {
+  removeSubProperty (ruleIndex, propIndex) {
     let {rules} = this.state;
     let rule = rules.get(ruleIndex);
     let properties = rule.get('properties');
@@ -244,10 +244,10 @@ class HomePage extends React.PureComponent {
                         {
                           property.get('type') === 'LIST' && (
                             <Button.Group type="ghost" style={{marginLeft: 50}}>
-                              <Button size="small" onClick={() => this.addSubRule(index, propIndex)}>
+                              <Button size="small" onClick={() => this.addSubProperty(index, propIndex)}>
                                 <Icon type="plus"/>
                               </Button>
-                              <Button size="small" onClick={() => this.removeSubRule(index, propIndex)}>
+                              <Button size="small" onClick={() => this.removeSubProperty(index, propIndex)}>
                                 <Icon type="minus"/>
                               </Button>
                             </Button.Group>
